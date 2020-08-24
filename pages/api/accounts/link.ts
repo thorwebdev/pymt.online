@@ -12,8 +12,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
     const accountLink = await stripe.accountLinks.create({
       account: account.id,
-      refresh_url: process.env.URL,
-      return_url: process.env.URL,
+      refresh_url: `${process.env.URL}/account?id=${account.id}`,
+      return_url: `${process.env.URL}/account?id=${account.id}`,
       type: "account_onboarding",
     });
 
