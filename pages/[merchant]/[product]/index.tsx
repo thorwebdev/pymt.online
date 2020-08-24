@@ -6,7 +6,7 @@ export default function ProductPage({ product }) {
   const { merchant, product: productId } = router.query;
   const { data, error } = useSWR(
     productId ? `/api/products/${merchant}/${productId}` : null,
-    fetch
+    async (url) => await fetch(url).then((res) => res.json())
   );
 
   if (error) return <div>failed to load</div>;
