@@ -1,9 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-type Data = {
-  name: string;
-};
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2020-03-02",
+});
 
-export default (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  res.status(200).json({ name: "John Doe" });
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse<Stripe.Charge>
+) => {
+  const payments = await stripe.charges.list({ limit: 1 });
+  const payment = payments.data[0];
+  res.status(200).json(payment);
 };

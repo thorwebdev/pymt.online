@@ -1057,7 +1057,7 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.5.tgz#dcce4430e64b443ba8945f0290fb564ad5bac6dd"
   integrity sha512-7+2BITlgjgDhH0vvwZU/HZJVyk+2XUlvxXe8dFMedNX/aMkaOq++rMAFXc0tM7ij15QaWlbdQASBR9dihi+bDQ==
 
-"@types/node@^14.6.0":
+"@types/node@>=8.1.0", "@types/node@^14.6.0":
   version "14.6.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.6.0.tgz#7d4411bf5157339337d7cff864d9ff45f177b499"
   integrity sha512-mikldZQitV94akrc4sCcSjtJfsTKt4p+e/s0AGscVA6XArQ9kFclP+ZiYUMnq987rc6QlYxXv/EivqlfSLxpKA==
@@ -2402,6 +2402,11 @@ extglob@^2.0.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+fast-deep-equal@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
+  integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
 
 fast-deep-equal@^3.1.1:
   version "3.1.3"
@@ -3834,6 +3839,11 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+qs@^6.6.0:
+  version "6.9.4"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
+  integrity sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ==
+
 query-string@^4.1.0:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.3.4.tgz#bbb693b9ca915c232515b228b1a02b609043dbeb"
@@ -4403,6 +4413,14 @@ strip-ansi@6.0.0:
   dependencies:
     ansi-regex "^5.0.0"
 
+stripe@^8.89.0:
+  version "8.89.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.89.0.tgz#fcd48ba7e298d547c89b686dea155f0507c25e67"
+  integrity sha512-XiAuNAyv2ORCWZrIaG22frr7rXP1J5+XsHA4QUBwB0fePB5kxV0O6FFMrZ8nipYZ43pnez5EIJ/Oxb1jLq6w6g==
+  dependencies:
+    "@types/node" ">=8.1.0"
+    qs "^6.6.0"
+
 style-loader@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-1.2.1.tgz#c5cbbfbf1170d076cfdd86e0109c5bba114baa1a"
@@ -4455,6 +4473,13 @@ supports-color@^7.1.0:
   integrity sha512-oRSIpR8pxT1Wr2FquTNnGet79b3BWljqOuoW/h4oBhxJ/HUbX5nX6JSruTkvXDCFMwDPvsaTTbvMLKZWSy0R5g==
   dependencies:
     has-flag "^4.0.0"
+
+swr@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.1.tgz#b673f32a470418a785d962c86bd96ec555986dd0"
+  integrity sha512-g9JrXXMo54CSc+DU+KS0S8+5r6cpeBmBmVLhCu23ifQL9u0KKirkJpNX3Za3eOttmUuRQLXA8N1YPpoc8ejdpA==
+  dependencies:
+    fast-deep-equal "2.0.1"
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"
