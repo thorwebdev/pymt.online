@@ -20,8 +20,8 @@ export default async (
         stripeAccount: merchant as string,
       }
     );
-    res.status(200).json(products.data);
+    res.status(200).json({ products: products.data });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ error, products: null });
   }
 };

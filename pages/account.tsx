@@ -12,8 +12,8 @@ export default function Connect() {
     async (url: string) => await fetch(url).then((res) => res.json())
   );
 
-  if (!data && id) return <div>loading...</div>;
-  if (data?.details_submitted)
+  if (!data?.account && id) return <div>loading...</div>;
+  if (data?.account?.details_submitted)
     return (
       <>
         <h3>You're successfully connected!</h3>

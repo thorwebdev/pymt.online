@@ -11,7 +11,33 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   } = req;
   try {
     const accountObject = await stripe.accounts.retrieve(id as string);
-    const { details_submitted } = accountObject;
+    const {
+      details_submitted,
+      settings: {
+        branding,
+        dashboard: { display_name },
+      },
+    } = accountObject;
+    // branding.icon = branding.icon
+    //   ? (
+    //       await stripe.fileLinks.create(
+    //         {
+    //           file: branding.icon as string,
+    //         },
+    //         { stripeAccount: id as string }
+    //       )
+    //     ).url
+    //   : null;
+    // branding.logo = branding.logo
+    //   ? (
+    //       await stripe.fileLinks.create(
+    //         {
+    //           file: branding.logo as string,
+    //         },
+    //         { stripeAccount: id as string }
+    //       )
+    //     ).url
+    //   : null;
 
     if (!details_submitted) {
       // Disconnect unclaimed account
@@ -21,8 +47,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       });
     }
 
-    res.status(200).json({ details_submitted });
+    res.status(200).json({
+      account: { id, details_submitted, name: display_name, branding },
+    });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ error, account: null });
   }
 };
