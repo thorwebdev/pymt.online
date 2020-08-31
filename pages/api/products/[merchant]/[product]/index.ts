@@ -14,13 +14,16 @@ export default async (
   res: NextApiResponse<Product | any>
 ) => {
   const {
-    query: { merchant, id },
+    query: { merchant, product: productID },
   } = req;
 
   try {
-    const product: Product = await stripe.products.retrieve(id as string, {
-      stripeAccount: merchant as string,
-    });
+    const product: Product = await stripe.products.retrieve(
+      productID as string,
+      {
+        stripeAccount: merchant as string,
+      }
+    );
     const prices = await stripe.prices.list(
       { product: product.id },
       { stripeAccount: merchant as string }

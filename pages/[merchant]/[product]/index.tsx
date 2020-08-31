@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Stripe from "stripe";
+import Product from "../../../components/Product";
 
 export default function ProductPage({ product }: { product: Stripe.Product }) {
   const router = useRouter();
-  const { merchant } = router.query;
+  const { merchant, success } = router.query;
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -15,7 +16,9 @@ export default function ProductPage({ product }: { product: Stripe.Product }) {
       <Link href={`/${merchant}`}>
         <a>⬅️ See all products by this merchant.</a>
       </Link>
-      <pre>{JSON.stringify(product, null, 2)}</pre>
+      {success !== undefined ? <h3>Thanks for your purchase!</h3> : ""}
+      <Product product={product} merchant={merchant as string} />
+      {/* <pre>{JSON.stringify(product, null, 2)}</pre> */}
     </>
   );
 }

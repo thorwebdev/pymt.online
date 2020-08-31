@@ -12,7 +12,7 @@ export default function Connect() {
     async (url: string) => await fetch(url).then((res) => res.json())
   );
 
-  if (!data?.account && id) return <div>loading...</div>;
+  if (!data?.account && id && !data?.error) return <div>loading...</div>;
   if (data?.account?.details_submitted)
     return (
       <>
