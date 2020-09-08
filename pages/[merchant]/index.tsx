@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Cart from "../../components/Cart";
 
 import Stripe from "stripe";
+import ProductList from "../../components/ProductList";
+import CartSummary from "../../components/CartSummary";
 
 export default function MerchantLandingPage({
   account,
@@ -22,18 +25,13 @@ export default function MerchantLandingPage({
   if (router.isFallback) return <div>Loading...</div>;
   if (!products) return <div>failed to load</div>;
   return (
-    <>
+    // TODO: currency selector
+    <Cart merchant={account.id}>
       <pre>{JSON.stringify(account, null, 2)}</pre>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            <Link href={`/${account.id}/${product.id}`}>
-              <a>{product.name}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </>
+      <CartSummary merchant={account.id} />
+      <hr />
+      <ProductList products={products} account={account} />
+    </Cart>
   );
 }
 
