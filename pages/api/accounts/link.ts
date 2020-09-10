@@ -12,8 +12,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
     const accountLink = await stripe.accountLinks.create({
       account: account.id,
-      refresh_url: `${process.env.VERCEL_URL}/account?id=${account.id}`,
-      return_url: `${process.env.VERCEL_URL}/account?id=${account.id}`,
+      refresh_url: `https://${process.env.VERCEL_URL}/account?id=${account.id}`,
+      return_url: `https://${process.env.VERCEL_URL}/account?id=${account.id}`,
       type: "account_onboarding",
     });
 

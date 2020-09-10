@@ -27,8 +27,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       // payment_intent_data: {
       //   application_fee_amount: 123,
       // },
-      success_url: `${process.env.VERCEL_URL}/${merchant}/${product}?success`,
-      cancel_url: `${process.env.VERCEL_URL}/${merchant}/${product}`,
+      success_url: `https://${process.env.VERCEL_URL}/${merchant}/${product}?success`,
+      cancel_url: `https://${process.env.VERCEL_URL}/${merchant}/${product}`,
     };
     // Retrieve product object to check metadata for shipping locations.
     const stripeProduct = await stripe.products.retrieve(

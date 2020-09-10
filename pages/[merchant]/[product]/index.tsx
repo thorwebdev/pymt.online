@@ -40,7 +40,7 @@ export async function getStaticProps({
   params: { merchant: string; product: string };
 }) {
   const res = await fetch(
-    `${process.env.VERCEL_URL}/api/products/${params.merchant}/${params.product}`
+    `https://${process.env.VERCEL_URL}/api/products/${params.merchant}/${params.product}`
   );
   const { product } = await res.json();
 
