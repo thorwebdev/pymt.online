@@ -41,8 +41,8 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     // Cast event data to Stripe object.
     if (event.type === "product.created") {
       const product = event.data.object as Stripe.Product;
-      const pymtLink = `${process.env.URL}/${event.account}/${product.id}`;
-      const qrCodeLink = `${process.env.URL}/${event.account}/${product.id}/qr`;
+      const pymtLink = `${process.env.VERCEL_URL}/${event.account}/${product.id}`;
+      const qrCodeLink = `${process.env.VERCEL_URL}/${event.account}/${product.id}/qr`;
       await stripe.products.update(
         product.id,
         {

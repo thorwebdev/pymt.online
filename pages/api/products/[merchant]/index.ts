@@ -19,6 +19,7 @@ export default async (
   } = req;
 
   try {
+    // TODO validate that merchant starts with acct_
     const prices = await stripe.prices.list(
       { active: true, limit: 100, expand: ["data.product"] },
       {

@@ -41,8 +41,8 @@ export default async function handler(
           allowed_countries: ["US", "CA"],
         },
         line_items,
-        success_url: `${process.env.URL}/${merchant}?success&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.URL}/${merchant}`,
+        success_url: `${process.env.VERCEL_URL}/${merchant}?success&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.VERCEL_URL}/${merchant}`,
       };
       const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
         params,
