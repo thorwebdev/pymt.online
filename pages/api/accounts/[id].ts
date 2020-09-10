@@ -13,6 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const accountObject = await stripe.accounts.retrieve(id as string);
     const {
       details_submitted,
+      default_currency,
       settings: {
         branding,
         dashboard: { display_name },
@@ -48,7 +49,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     res.status(200).json({
-      account: { id, details_submitted, name: display_name, branding },
+      account: {
+        id,
+        details_submitted,
+        name: display_name,
+        branding,
+        default_currency,
+      },
     });
   } catch (error) {
     res.status(400).json({ error, account: null });
