@@ -3,6 +3,7 @@ import { formatAmountForDisplay } from "../utils/stripe-helpers";
 import { useState } from "react";
 import getStripe from "../utils/get-stripejs";
 import { useShoppingCart } from "use-shopping-cart";
+import { useManageCart } from "../utils/cart-manager";
 
 interface Product extends Stripe.Product {
   prices?: Stripe.Price[];
@@ -20,10 +21,25 @@ export default function Product({
   currency?: string;
 }) {
   const [loading, setLoading] = useState(false);
-  const { addItem } = useShoppingCart();
+  const { addItem, clearCart } = useShoppingCart();
+  const { currentMerchant, setMerchant } = useManageCart();
 
   const addToCart = (event) => {
     event.preventDefault();
+    // Check if we already have an active Cart with a different merchant
+    if (!currentMerchant) {
+      setMerchant(merchant);
+    } else if (merchant !== currentMerchant) {
+      const confirmMessage =
+        "You already have a cart session with a different merchant. Do you want to discard the old cart and start a new one?";
+      if (window.confirm(confirmMessage)) {
+        clearCart();
+        setMerchant(merchant);
+      } else {
+        // abort
+        return;
+      }
+    }
     const formData = new FormData(event.target.parentElement);
     const priceId = formData.get("price");
     const price = product.prices.find((p) => p.id === priceId);
@@ -91,15 +107,14 @@ export default function Product({
             </option>
           ))}
       </select>
-      <button disabled={loading} role="link">
-        Buy now
-      </button>
       {page === "merchant" ? (
         <button onClick={addToCart} disabled={loading} type="button">
           Add to cart
         </button>
       ) : (
-        ""
+        <button disabled={loading} role="link">
+          Buy now
+        </button>
       )}
     </form>
   );
