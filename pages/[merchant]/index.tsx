@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
-import Cart from "../../components/Cart";
+import Link from "next/link";
 
 import Stripe from "stripe";
-import ProductList from "../../components/ProductList";
+import Cart from "../../components/Cart";
 import CartSummary from "../../components/CartSummary";
+import Product from "../../components/Product";
 
 export default function MerchantLandingPage({
   account,
@@ -14,6 +14,7 @@ export default function MerchantLandingPage({
     id: string;
     name: string;
     details_submitted: boolean;
+    default_currency: string;
     branding: Stripe.Account.Settings.Branding;
   };
   products: Stripe.Product[];
@@ -26,11 +27,28 @@ export default function MerchantLandingPage({
   if (!products) return <div>failed to load</div>;
   return (
     // TODO: currency selector
-    <Cart merchant={account.id}>
+    <Cart merchant={account.id} currency={account.default_currency}>
       <pre>{JSON.stringify(account, null, 2)}</pre>
       <CartSummary merchant={account.id} />
       <hr />
-      <ProductList products={products} account={account} />
+      <div>
+        {products.map((product: Stripe.Product) => (
+          <div key={product.id}>
+            <Link href={`/${account.id}/${product.id}`}>
+              <a>
+                {
+                  <Product
+                    page="merchant"
+                    product={product}
+                    merchant={account.id}
+                    currency={account.default_currency}
+                  />
+                }
+              </a>
+            </Link>
+          </div>
+        ))}
+      </div>
     </Cart>
   );
 }

@@ -5,11 +5,11 @@ import getStripe from "../utils/get-stripejs";
 export default function Cart({
   children,
   merchant,
-  currency = "USD",
+  currency,
 }: {
   children: ReactNode;
   merchant: string;
-  currency?: string;
+  currency: string;
 }) {
   return (
     <CartProvider
