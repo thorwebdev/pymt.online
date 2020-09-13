@@ -37,6 +37,8 @@ export default function Connect() {
               href={`https://dashboard.stripe.com/${
                 data?.account?.livemode ? "" : "test/"
               }products`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Manage your products in Stripe.
             </a>
