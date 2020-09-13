@@ -25,7 +25,7 @@ export default async function handler(
         cartItems,
         merchant,
       }: { cartItems: Array<CartItem>; merchant: string } = req.body;
-
+      // TODO: only allow a max of 10 items per cart
       const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = Object.keys(
         cartItems
       ).map((key) => ({
