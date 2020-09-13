@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import Stripe from "stripe";
+import { isValidStripeId } from "../../../utils/helpers";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-03-02",
 });
@@ -10,6 +11,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     query: { id },
   } = req;
   try {
+    if (!isValidStripeId("account", id as string))
+      throw { message: "Invalid Stripe ID." };
     const accountObject = await stripe.accounts.retrieve(id as string);
     const {
       details_submitted,
@@ -55,6 +58,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         name: display_name,
         branding,
         default_currency,
+        livemode: process.env.STRIPE_SECRET_KEY.includes("live"),
       },
     });
   } catch (error) {

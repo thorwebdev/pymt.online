@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { useShoppingCart } from "use-shopping-cart";
 import { useManageCart } from "../utils/cart-manager";
-import { fetchPostJSON } from "../utils/stripe-helpers";
+import { fetchPostJSON } from "../utils/helpers";
 
 const CartSummary = ({ merchant }) => {
   const [loading, setLoading] = useState(false);

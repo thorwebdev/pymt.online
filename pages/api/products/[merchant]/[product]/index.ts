@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { isValidStripeId } from "../../../../../utils/helpers";
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
@@ -18,6 +19,11 @@ export default async (
   } = req;
 
   try {
+    if (
+      !isValidStripeId("account", merchant as string) ||
+      !isValidStripeId("product", productID as string)
+    )
+      throw { message: "Invalid Stripe ID." };
     const product: Product = await stripe.products.retrieve(
       productID as string,
       {

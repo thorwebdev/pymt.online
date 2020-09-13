@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { formatAmountForDisplay } from "../utils/stripe-helpers";
+import { formatAmountForDisplay } from "../utils/helpers";
 import { useState } from "react";
 import getStripe from "../utils/get-stripejs";
 import { useShoppingCart } from "use-shopping-cart";

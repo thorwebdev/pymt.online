@@ -44,3 +44,27 @@ export async function fetchPostJSON(url: string, data?: {}) {
     throw new Error(err.message);
   }
 }
+
+export function getURL() {
+  const url =
+    process?.env?.URL ?? process?.env?.VERCEL_URL ?? "http://localhost:3000";
+  return url.includes("http") ? url : `https://${url}`;
+}
+
+type StripeIdPrefix = {
+  account?: { prefix: "acct_"; minLength: number };
+  product?: { prefix: "prod_"; minLength: number };
+  payment?: { prefix: "py_"; minLength: number };
+};
+
+export function isValidStripeId(type: keyof StripeIdPrefix, id: string) {
+  const prefixMap: StripeIdPrefix = {
+    account: { prefix: "acct_", minLength: 21 },
+    product: { prefix: "prod_", minLength: 19 },
+  };
+
+  return (
+    id.startsWith(prefixMap[type].prefix) &&
+    id.length >= prefixMap[type].minLength
+  );
+}

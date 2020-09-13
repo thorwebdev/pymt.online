@@ -2,6 +2,7 @@ import { buffer } from "micro";
 import { NextApiRequest, NextApiResponse } from "next";
 
 import Stripe from "stripe";
+import { getURL } from "../../../utils/helpers";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-03-02",
 });
@@ -42,8 +43,8 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (event.type === "product.created") {
       const product = event.data.object as Stripe.Product;
       // TODO make util for domain
-      const pymtLink = `https://${process.env.VERCEL_URL}/${event.account}/${product.id}`;
-      const qrCodeLink = `https://${process.env.VERCEL_URL}/${event.account}/${product.id}/qr`;
+      const pymtLink = `${getURL()}/${event.account}/${product.id}`;
+      const qrCodeLink = `${getURL()}/${event.account}/${product.id}/qr`;
       await stripe.products.update(
         product.id,
         {

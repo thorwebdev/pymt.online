@@ -1,10 +1,12 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
+import DefaultErrorPage from "next/error";
 
 import Stripe from "stripe";
 import Cart from "../../components/Cart";
 import CartSummary from "../../components/CartSummary";
 import Product from "../../components/Product";
+import { getURL, isValidStripeId } from "../../utils/helpers";
 
 export default function MerchantLandingPage({
   account,
@@ -24,9 +26,8 @@ export default function MerchantLandingPage({
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) return <div>Loading...</div>;
-  if (!products) return <div>failed to load</div>;
+  if (!products) return <DefaultErrorPage statusCode={404} />;
   return (
-    // TODO: currency selector
     <Cart merchant={account.id} currency={account.default_currency}>
       <pre>{JSON.stringify(account, null, 2)}</pre>
       <CartSummary merchant={account.id} />
@@ -69,18 +70,27 @@ export async function getStaticProps({
 }: {
   params: { merchant: string };
 }) {
-  const accountRes = await fetch(
-    `https://${process.env.VERCEL_URL}/api/accounts/${params.merchant}`
-  );
-  const { account } = await accountRes.json();
-  const productRes = await fetch(
-    `https://${process.env.VERCEL_URL}/api/products/${params.merchant}`
-  );
-  const { products } = await productRes.json();
+  const props: { account: object; products: object } = {
+    account: null,
+    products: null,
+  };
+
+  if (isValidStripeId("account", params.merchant)) {
+    const accountRes = await fetch(
+      `${getURL()}/api/accounts/${params.merchant}`
+    );
+    const { account } = await accountRes.json();
+    props.account = account;
+    const productRes = await fetch(
+      `${getURL()}/api/products/${params.merchant}`
+    );
+    const { products } = await productRes.json();
+    props.products = products;
+  }
 
   // Pass the product data to the page via props
   return {
-    props: { account, products },
+    props,
     // Re-generate the product page at most once per minute
     // if a request comes in
     revalidate: 60, // in seconds
