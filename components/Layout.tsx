@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import Head from "next/head";
-import Link from "next/link";
+import NextLink from "next/link";
+import { Flex, Box, Text, Link as ChakraLink } from "@chakra-ui/core";
 
 type Props = {
   children: ReactNode;
@@ -22,44 +23,33 @@ const Layout = ({ children, title = "pymt.online" }: Props) => (
       />
       <meta name="twitter:image" content="/logo.svg" />
     </Head>
-    <div className="container">
-      <header>
-        <div className="header-content">
-          <Link href="/">
-            <a className="logo">
-              <img src="/logo.svg" />
-            </a>
-          </Link>
-          <h1>
-            <span className="light">Stripe Sample</span>
-            <br />
-            Next.js, TypeScript, and Stripe 🔒💸
-          </h1>
-        </div>
-      </header>
-      {children}
-    </div>
-    <div className="banner">
-      <span>
-        This is a{" "}
-        <a
-          href="https://github.com/stripe-samples"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Stripe Sample
-        </a>
-        .{" View code on "}
-        <a
-          href="https://github.com/vercel/next.js/tree/canary/examples/with-stripe-typescript"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          GitHub
-        </a>
-        .
-      </span>
-    </div>
+    {children}
+    <footer>
+      <Flex
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+        maxWidth="800px"
+        width="100%"
+        p={8}
+        mt={[0, 0, 8]}
+        mb={[0, 0, 8]}
+        mx="auto"
+      >
+        <Box>
+          <Text
+            as="span"
+            color="grey.500"
+          >{`Copyright © ${new Date().getFullYear()} `}</Text>
+          <ChakraLink isExternal href="https://twitter.com/thorwebdev">
+            {"@thorwebdev"}
+          </ChakraLink>
+        </Box>
+        <NextLink href="/terms" passHref>
+          <a>Terms · Privacy Policy · Refunds · About</a>
+        </NextLink>
+      </Flex>
+    </footer>
   </>
 );
 

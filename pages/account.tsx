@@ -2,6 +2,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { isValidStripeId } from "../utils/helpers";
+import Layout from "../components/Layout";
+import Hero from "../components/Hero";
+import { Button, Box } from "@chakra-ui/core";
 
 export default function Connect() {
   const redirectToStripe = () => window.location.assign("/api/accounts/link");
@@ -24,7 +27,8 @@ export default function Connect() {
     return <div>loading...</div>;
   if (data?.account?.details_submitted)
     return (
-      <>
+      <Layout>
+        <Hero size="small" />
         <h3>You're successfully connected!</h3>
         <ul>
           <li>
@@ -44,7 +48,16 @@ export default function Connect() {
             </a>
           </li>
         </ul>
-      </>
+      </Layout>
     );
-  return <button onClick={redirectToStripe}>Connect with Stripe</button>;
+  return (
+    <Layout>
+      <Hero size="small" />
+      <Box alignItems="center" maxWidth="800px" width="100%">
+        <Button onClick={redirectToStripe} size="lg" bg="secondary" mt="24px">
+          Signup with Stripe
+        </Button>
+      </Box>
+    </Layout>
+  );
 }
