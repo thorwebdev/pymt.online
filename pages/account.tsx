@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import { isValidStripeId } from "../utils/helpers";
 
 export default function Connect() {
   const redirectToStripe = () => window.location.assign("/api/accounts/link");
@@ -8,11 +9,19 @@ export default function Connect() {
   const router = useRouter();
   const { id } = router.query;
   const { data } = useSWR(
-    id ? `/api/accounts/${id}` : null,
+    id && isValidStripeId("account", id as string)
+      ? `/api/accounts/${id}`
+      : null,
     async (url: string) => await fetch(url).then((res) => res.json())
   );
 
-  if (!data?.account && id && !data?.error) return <div>loading...</div>;
+  if (
+    !data?.account &&
+    id &&
+    isValidStripeId("account", id as string) &&
+    !data?.error
+  )
+    return <div>loading...</div>;
   if (data?.account?.details_submitted)
     return (
       <>
@@ -24,7 +33,13 @@ export default function Connect() {
             </Link>
           </li>
           <li>
-            <a href="https://dashboard.stripe.com/">Go to Stripe Dashboard</a>
+            <a
+              href={`https://dashboard.stripe.com/${
+                data?.account?.livemode ? "" : "test/"
+              }products`}
+            >
+              Manage your products in Stripe.
+            </a>
           </li>
         </ul>
       </>

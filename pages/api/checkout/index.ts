@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { getURL } from "../../../utils/helpers";
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -34,15 +35,20 @@ export default async function handler(
       // Create Checkout Sessions from body params.
       const params: Stripe.Checkout.SessionCreateParams = {
         mode: "payment",
+        // TODO: figure out our pricing
+        // payment_intent_data: {
+        //   application_fee_amount: 123,
+        // },
         submit_type: "pay",
         payment_method_types: ["card"],
         billing_address_collection: "auto",
         shipping_address_collection: {
+          // TODO: shipping countries from products
           allowed_countries: ["US", "CA"],
         },
         line_items,
-        success_url: `${process.env.URL}/${merchant}?success&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.URL}/${merchant}`,
+        success_url: `${getURL()}/${merchant}?success&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${getURL()}/${merchant}`,
       };
       const checkoutSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(
         params,

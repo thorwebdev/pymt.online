@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { getURL } from "../../../utils/helpers";
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
@@ -12,8 +13,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
     const accountLink = await stripe.accountLinks.create({
       account: account.id,
-      refresh_url: `${process.env.URL}/account?id=${account.id}`,
-      return_url: `${process.env.URL}/account?id=${account.id}`,
+      refresh_url: `${getURL()}/account?id=${account.id}`,
+      return_url: `${getURL()}/account?id=${account.id}`,
       type: "account_onboarding",
     });
 

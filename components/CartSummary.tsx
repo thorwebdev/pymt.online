@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { useShoppingCart } from "use-shopping-cart";
 import { useManageCart } from "../utils/cart-manager";
-import { fetchPostJSON } from "../utils/stripe-helpers";
+import { fetchPostJSON } from "../utils/helpers";
 
 const CartSummary = ({ merchant }) => {
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,6 @@ const CartSummary = ({ merchant }) => {
     event.preventDefault();
     setLoading(true);
 
-    // TODO create our checkout session
     const response = await fetchPostJSON("api/checkout", {
       cartItems: cartDetails,
       merchant,
@@ -39,12 +38,15 @@ const CartSummary = ({ merchant }) => {
     return (
       <div>
         <h2>Cart summary</h2>
-        <Link href={`/${currentMerchant}`}>
-          <a>Go to merchant page</a>
-        </Link>
+        <span>
+          {`You already have a cart session with a `}
+          <Link href={`/${currentMerchant}`}>
+            <a>different merchant.</a>
+          </Link>
+        </span>
         <button
           type="button"
-          onClick={(_) => {
+          onClick={() => {
             clearCart();
             clearMerchant();
           }}
@@ -74,7 +76,7 @@ const CartSummary = ({ merchant }) => {
       </button>
       <button
         type="button"
-        onClick={(_) => {
+        onClick={() => {
           clearCart();
           clearMerchant();
         }}

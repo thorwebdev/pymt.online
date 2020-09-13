@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import DefaultErrorPage from "next/error";
+
 import Stripe from "stripe";
 import Product from "../../../components/Product";
+import { getURL, isValidStripeId } from "../../../utils/helpers";
 
 export default function ProductPage({ product }: { product: Stripe.Product }) {
   const router = useRouter();
@@ -10,7 +13,7 @@ export default function ProductPage({ product }: { product: Stripe.Product }) {
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
   if (router.isFallback) return <div>Loading...</div>;
-  if (!product) return <div>failed to load</div>;
+  if (!product) return <DefaultErrorPage statusCode={404} />;
   return (
     <>
       <Link href={`/${merchant}`}>
@@ -39,14 +42,24 @@ export async function getStaticProps({
 }: {
   params: { merchant: string; product: string };
 }) {
-  const res = await fetch(
-    `${process.env.URL}/api/products/${params.merchant}/${params.product}`
-  );
-  const { product } = await res.json();
+  const props: { product: object } = {
+    product: null,
+  };
+
+  if (
+    isValidStripeId("account", params.merchant) &&
+    isValidStripeId("product", params.product)
+  ) {
+    const res = await fetch(
+      `${getURL()}/api/products/${params.merchant}/${params.product}`
+    );
+    const { product } = await res.json();
+    props.product = product;
+  }
 
   // Pass the product data to the page via props
   return {
-    props: { product },
+    props,
     // Re-generate the product page at most once per minute
     // if a request comes in
     revalidate: 60, // in seconds

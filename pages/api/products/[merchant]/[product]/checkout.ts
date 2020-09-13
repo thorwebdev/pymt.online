@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { getURL } from "../../../../../utils/helpers";
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
@@ -27,8 +28,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       // payment_intent_data: {
       //   application_fee_amount: 123,
       // },
-      success_url: `${process.env.URL}/${merchant}/${product}?success`,
-      cancel_url: `${process.env.URL}/${merchant}/${product}`,
+      success_url: `${getURL()}/${merchant}/${product}?success`,
+      cancel_url: `${getURL()}/${merchant}/${product}`,
     };
     // Retrieve product object to check metadata for shipping locations.
     const stripeProduct = await stripe.products.retrieve(
