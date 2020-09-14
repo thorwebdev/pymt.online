@@ -4,9 +4,12 @@ import DefaultErrorPage from "next/error";
 
 import Stripe from "stripe";
 import Cart from "../../components/Cart";
-import CartSummary from "../../components/CartSummary";
-import Product from "../../components/Product";
+import ProductCard from "../../components/ProductCard";
 import { getURL, isValidStripeId } from "../../utils/helpers";
+import NavBar from "../../components/NavBar";
+import { SimpleGrid, Flex } from "@chakra-ui/core";
+import { useEffect } from "react";
+import { useManageCart } from "../../utils/cart-manager";
 
 export default function MerchantLandingPage({
   account,
@@ -21,6 +24,8 @@ export default function MerchantLandingPage({
   };
   products: Stripe.Product[];
 }) {
+  const { initMerchant } = useManageCart();
+  useEffect(() => initMerchant(), []);
   const router = useRouter();
 
   // If the page is not yet generated, this will be displayed
@@ -29,27 +34,27 @@ export default function MerchantLandingPage({
   if (!products) return <DefaultErrorPage statusCode={404} />;
   return (
     <Cart merchant={account.id} currency={account.default_currency}>
-      <pre>{JSON.stringify(account, null, 2)}</pre>
-      <CartSummary merchant={account.id} />
+      <NavBar account={account} />
       <hr />
-      <div>
-        {products.map((product: Stripe.Product) => (
-          <div key={product.id}>
-            <Link href={`/${account.id}/${product.id}`}>
-              <a>
-                {
-                  <Product
-                    page="merchant"
-                    product={product}
-                    merchant={account.id}
-                    currency={account.default_currency}
-                  />
-                }
-              </a>
-            </Link>
-          </div>
-        ))}
-      </div>
+      <Flex align="center" justify="center">
+        <SimpleGrid maxWidth="1000px" p="4" columns={[1, 2, 3]} spacing="40px">
+          {products.map((product: Stripe.Product) => (
+            <div key={product.id}>
+              <Link href={`/${account.id}/${product.id}`}>
+                <a>
+                  {
+                    <ProductCard
+                      product={product}
+                      account={account}
+                      currency={account.default_currency}
+                    />
+                  }
+                </a>
+              </Link>
+            </div>
+          ))}
+        </SimpleGrid>
+      </Flex>
     </Cart>
   );
 }
