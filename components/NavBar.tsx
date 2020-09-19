@@ -36,6 +36,7 @@ export default function NavBar({ account }: { account?: Account }) {
                 (account.branding?.icon as string)
               }
               size={30}
+              rounded="full"
             />
           ) : (
             ""
