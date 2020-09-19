@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import NextLink from "next/link";
 import { Box, Flex, Image, Heading } from "@chakra-ui/core";
 
 import CartSummary from "./CartSummary";
@@ -21,16 +22,23 @@ export default function NavBar({ account }: { account?: Account }) {
       justifyContent="space-between"
       alignItems="center"
     >
-      <Flex flexDirection="row" justifyContent="center" alignItems="center">
-        <Image src="/logo.svg" size={30} />
-        <Heading
-          fontSize="xl"
-          pl={3}
-          color={account?.branding?.secondary_color ?? "secondary"}
+      <NextLink href={account ? `/${account.id}` : "/"} passHref>
+        <Flex
+          as="a"
+          flexDirection="row"
+          justifyContent="center"
+          alignItems="center"
         >
-          {account?.name ?? "pymt.online"}
-        </Heading>
-      </Flex>
+          <Image src="/logo.svg" size={30} />
+          <Heading
+            fontSize="xl"
+            pl={3}
+            color={account?.branding?.secondary_color ?? "secondary"}
+          >
+            {account?.name ?? "pymt.online"}
+          </Heading>
+        </Flex>
+      </NextLink>
       {account ? (
         <Box>
           <CartSummary account={account} />

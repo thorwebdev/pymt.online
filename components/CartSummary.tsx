@@ -45,7 +45,7 @@ const CartSummary = ({ account }) => {
   const handleCheckout = async (event) => {
     setLoading(true);
 
-    const response = await fetchPostJSON("api/checkout", {
+    const response = await fetchPostJSON("/api/checkout", {
       cartItems: cartDetails,
       merchant: account.id,
     });

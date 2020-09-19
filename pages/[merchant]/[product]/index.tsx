@@ -1,28 +1,80 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import DefaultErrorPage from "next/error";
 
 import Stripe from "stripe";
-import Product from "../../../components/Product";
 import { getURL, isValidStripeId } from "../../../utils/helpers";
+import Layout from "../../../components/Layout";
+import NavBar from "../../../components/NavBar";
+import {
+  Skeleton,
+  Flex,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Box,
+} from "@chakra-ui/core";
+import Cart from "../../../components/Cart";
+import SuccessModal from "../../../components/SuccessModal";
+import ProductDetailCard from "../../../components/ProductDetailCard";
+import { useManageCart } from "../../../utils/cart-manager";
+import { useEffect } from "react";
 
-export default function ProductPage({ product }: { product: Stripe.Product }) {
+export default function ProductPage({
+  account,
+  product,
+}: {
+  account: {
+    id: string;
+    name: string;
+    details_submitted: boolean;
+    default_currency: string;
+    branding: Stripe.Account.Settings.Branding;
+  };
+  product: Stripe.Product;
+}) {
+  const { initMerchant } = useManageCart();
+  useEffect(() => initMerchant(), []);
   const router = useRouter();
-  const { merchant, success } = router.query;
+  const { success } = router.query;
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  if (router.isFallback) return <div>Loading...</div>;
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback)
+    return (
+      <Layout>
+        <NavBar />
+        <Skeleton height="20px" my="10px" />
+        <Skeleton height="20px" my="10px" />
+        <Skeleton height="20px" my="10px" />
+      </Layout>
+    );
   if (!product) return <DefaultErrorPage statusCode={404} />;
   return (
-    <>
-      <Link href={`/${merchant}`}>
-        <a>⬅️ See all products by this merchant.</a>
-      </Link>
-      {success !== undefined ? <h3>Thanks for your purchase!</h3> : ""}
-      <Product product={product} merchant={merchant as string} />
-      {/* <pre>{JSON.stringify(product, null, 2)}</pre> */}
-    </>
+    <Layout>
+      <Cart merchant={account.id} currency={account.default_currency}>
+        <NavBar account={account} />
+        <SuccessModal account={account} success={success} />
+        <Flex p={4} align="center" justify="center">
+          <Box>
+            <Breadcrumb mb={4}>
+              <BreadcrumbItem>
+                <NextLink href={`/${account.id}`} passHref>
+                  <BreadcrumbLink>All products</BreadcrumbLink>
+                </NextLink>
+              </BreadcrumbItem>
+
+              <BreadcrumbItem isCurrentPage>
+                <BreadcrumbLink>{product.name}</BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+            <ProductDetailCard product={product} account={account} />
+          </Box>
+        </Flex>
+      </Cart>
+    </Layout>
   );
 }
 
@@ -42,7 +94,8 @@ export async function getStaticProps({
 }: {
   params: { merchant: string; product: string };
 }) {
-  const props: { product: object } = {
+  const props: { account: object; product: object } = {
+    account: null,
     product: null,
   };
 
@@ -50,6 +103,11 @@ export async function getStaticProps({
     isValidStripeId("account", params.merchant) &&
     isValidStripeId("product", params.product)
   ) {
+    const accountRes = await fetch(
+      `${getURL()}/api/accounts/${params.merchant}`
+    );
+    const { account } = await accountRes.json();
+    props.account = account;
     const res = await fetch(
       `${getURL()}/api/products/${params.merchant}/${params.product}`
     );
