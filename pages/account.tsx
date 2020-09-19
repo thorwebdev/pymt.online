@@ -12,7 +12,9 @@ import {
   List,
   ListItem,
   Icon,
+  Skeleton,
 } from "@chakra-ui/core";
+import Instructions from "../components/Instructions";
 
 export default function Connect() {
   const router = useRouter();
@@ -30,7 +32,14 @@ export default function Connect() {
     isValidStripeId("account", id as string) &&
     !data?.error
   )
-    return <div>loading...</div>;
+    return (
+      <Layout>
+        <Hero size="small" />
+        <Skeleton height="20px" my="10px" />
+        <Skeleton height="20px" my="10px" />
+        <Skeleton height="20px" my="10px" />
+      </Layout>
+    );
   if (data?.account?.details_submitted)
     return (
       <Layout>
@@ -40,7 +49,7 @@ export default function Connect() {
             <Heading as="h2" size="xl">
               {`You're successfully connected! 🥳`}
             </Heading>
-            <List mt={4} styleType="disc">
+            <List mt={4} mb={4} styleType="disc">
               <ListItem>
                 <ChakraLink
                   isExternal
@@ -58,16 +67,26 @@ export default function Connect() {
                 </NextLink>
               </ListItem>
             </List>
+            <Instructions account={data.account} />
           </Box>
         </Flex>
       </Layout>
     );
   if (data && typeof window === "object") window?.location?.replace("/");
   if (
+    typeof window === "object" &&
     id &&
-    !isValidStripeId("account", id as string) &&
-    typeof window === "object"
+    !isValidStripeId("account", id as string)
   )
     window?.location?.replace("/");
-  return <p>test</p>;
+  return (
+    <Layout>
+      <Hero />
+      <Flex p={5} align="center" justify="center">
+        <Box maxWidth="1000px">
+          <Instructions />
+        </Box>
+      </Flex>
+    </Layout>
+  );
 }

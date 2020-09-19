@@ -85,7 +85,7 @@ export default function ProductCard({
         >
           {product.name}
         </Text>
-        <Badge fontSize="1em" variantColor="green">
+        <Badge fontSize="1em">
           {formatAmountForDisplay(price.unit_amount, price.currency)}
         </Badge>
       </Flex>

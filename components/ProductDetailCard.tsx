@@ -153,6 +153,7 @@ export default function ProductDetailCard({
           <FormLabel htmlFor="quantity">Quantity</FormLabel>
           <Select
             id="quantity"
+            mt={2}
             variant="unstyled"
             placeholder="Select quantity"
             defaultValue="1"
