@@ -37,7 +37,10 @@ const Layout = ({ children, title = "pymt.online" }: Props) => (
         </Box>
         <Box>
           <NextLink href="/terms" passHref>
-            <a>Terms · Privacy · Refunds</a>
+            <a>Terms · Privacy · </a>
+          </NextLink>
+          <NextLink href="/pricing" passHref>
+            <a>Pricing</a>
           </NextLink>
         </Box>
       </Flex>
