@@ -88,7 +88,9 @@ export default function ProductCard({
           {product.name}
         </Text>
         <Badge fontSize="1em">
-          {formatAmountForDisplay(price.unit_amount, price.currency)}
+          {price
+            ? formatAmountForDisplay(price.unit_amount, price.currency)
+            : "CLICK FOR PRICE"}
         </Badge>
       </Flex>
       <Text mt={2}>{product.description}</Text>
@@ -102,6 +104,7 @@ export default function ProductCard({
         ""
       )}
       <Button
+        isDisabled={!price}
         mt={2}
         bg={account?.branding?.secondary_color ?? "secondary"}
         onClick={(e) => addToCart(e, price)}
