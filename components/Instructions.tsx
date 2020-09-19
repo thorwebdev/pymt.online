@@ -8,7 +8,11 @@ import {
   Box,
 } from "@chakra-ui/core";
 
-export default function Instructions({ account }: { account?: object }) {
+export default function Instructions({
+  account,
+}: {
+  account?: { livemode: boolean };
+}) {
   return (
     <Stack spacing={3}>
       <Heading as="h1" size="2xl">
