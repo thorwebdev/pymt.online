@@ -4,9 +4,14 @@ import DefaultErrorPage from "next/error";
 
 import Stripe from "stripe";
 import Cart from "../../components/Cart";
-import CartSummary from "../../components/CartSummary";
-import Product from "../../components/Product";
+import ProductCard from "../../components/ProductCard";
 import { getURL, isValidStripeId } from "../../utils/helpers";
+import NavBar from "../../components/NavBar";
+import { SimpleGrid, Flex, Skeleton } from "@chakra-ui/core";
+import { useEffect } from "react";
+import { useManageCart } from "../../utils/cart-manager";
+import Layout from "../../components/Layout";
+import SuccessModal from "../../components/SuccessModal";
 
 export default function MerchantLandingPage({
   account,
@@ -21,36 +26,54 @@ export default function MerchantLandingPage({
   };
   products: Stripe.Product[];
 }) {
+  const { initMerchant } = useManageCart();
+  useEffect(() => initMerchant(), []);
   const router = useRouter();
+  const { success } = router.query;
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
-  if (router.isFallback) return <div>Loading...</div>;
+  if (router.isFallback)
+    return (
+      <Layout>
+        <NavBar />
+        <Skeleton height="20px" my="10px" />
+        <Skeleton height="20px" my="10px" />
+        <Skeleton height="20px" my="10px" />
+      </Layout>
+    );
   if (!products) return <DefaultErrorPage statusCode={404} />;
   return (
-    <Cart merchant={account.id} currency={account.default_currency}>
-      <pre>{JSON.stringify(account, null, 2)}</pre>
-      <CartSummary merchant={account.id} />
-      <hr />
-      <div>
-        {products.map((product: Stripe.Product) => (
-          <div key={product.id}>
-            <Link href={`/${account.id}/${product.id}`}>
-              <a>
-                {
-                  <Product
-                    page="merchant"
-                    product={product}
-                    merchant={account.id}
-                    currency={account.default_currency}
-                  />
-                }
-              </a>
-            </Link>
-          </div>
-        ))}
-      </div>
-    </Cart>
+    <Layout account={account}>
+      <Cart merchant={account.id} currency={account.default_currency}>
+        <NavBar account={account} />
+        <SuccessModal account={account} success={success} />
+        <Flex align="center" justify="center">
+          <SimpleGrid
+            maxWidth="1000px"
+            p="4"
+            columns={[1, 2, 3]}
+            spacing="40px"
+          >
+            {products.map((product: Stripe.Product) => (
+              <div key={product.id}>
+                <Link href={`/${account.id}/${product.id}`}>
+                  <a>
+                    {
+                      <ProductCard
+                        product={product}
+                        account={account}
+                        currency={account.default_currency}
+                      />
+                    }
+                  </a>
+                </Link>
+              </div>
+            ))}
+          </SimpleGrid>
+        </Flex>
+      </Cart>
+    </Layout>
   );
 }
 

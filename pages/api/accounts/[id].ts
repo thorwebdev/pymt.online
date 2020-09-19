@@ -21,27 +21,28 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         branding,
         dashboard: { display_name },
       },
+      business_profile: { support_email },
     } = accountObject;
-    // branding.icon = branding.icon
-    //   ? (
-    //       await stripe.fileLinks.create(
-    //         {
-    //           file: branding.icon as string,
-    //         },
-    //         { stripeAccount: id as string }
-    //       )
-    //     ).url
-    //   : null;
-    // branding.logo = branding.logo
-    //   ? (
-    //       await stripe.fileLinks.create(
-    //         {
-    //           file: branding.logo as string,
-    //         },
-    //         { stripeAccount: id as string }
-    //       )
-    //     ).url
-    //   : null;
+    branding.icon = branding.icon
+      ? (
+          await stripe.fileLinks.create(
+            {
+              file: branding.icon as string,
+            },
+            { stripeAccount: id as string }
+          )
+        ).url
+      : null;
+    branding.logo = branding.logo
+      ? (
+          await stripe.fileLinks.create(
+            {
+              file: branding.logo as string,
+            },
+            { stripeAccount: id as string }
+          )
+        ).url
+      : null;
 
     if (!details_submitted) {
       // Disconnect unclaimed account
@@ -56,6 +57,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         id,
         details_submitted,
         name: display_name,
+        email: support_email,
         branding,
         default_currency,
         livemode: process.env.STRIPE_SECRET_KEY.includes("live"),
