@@ -74,6 +74,7 @@ const CartSummary = ({ account }) => {
 
     const response = await fetchPostJSON("/api/checkout", {
       cartItems: cartDetails,
+      shippingCountries: [shippingCountry[0]],
       merchant: account.id,
     });
 
