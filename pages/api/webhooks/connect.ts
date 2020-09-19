@@ -42,7 +42,6 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     // Cast event data to Stripe object.
     if (event.type === "product.created") {
       const product = event.data.object as Stripe.Product;
-      // TODO make util for domain
       const pymtLink = `${getURL()}/${event.account}/${product.id}`;
       const qrCodeLink = `${getURL()}/${event.account}/${product.id}/qr`;
       await stripe.products.update(

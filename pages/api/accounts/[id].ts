@@ -22,6 +22,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         dashboard: { display_name },
       },
       business_profile: { support_email },
+      country,
     } = accountObject;
     branding.icon = branding.icon
       ? (
@@ -55,6 +56,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json({
       account: {
         id,
+        country,
         details_submitted,
         name: display_name,
         email: support_email,

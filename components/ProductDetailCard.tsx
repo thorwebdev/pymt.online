@@ -10,6 +10,7 @@ import {
   Select,
   FormControl,
   FormLabel,
+  Icon,
 } from "@chakra-ui/core";
 import { formatAmountForDisplay } from "../utils/helpers";
 import { useShoppingCart } from "use-shopping-cart";
@@ -71,6 +72,8 @@ export default function ProductDetailCard({
         name: product.name,
         currency: price.currency,
         image: product.images[0],
+        // TODO figure out a better way to pass shipping countries.
+        description: product.metadata.shippingCountries,
       },
       quantity
     );
@@ -173,6 +176,17 @@ export default function ProductDetailCard({
           may apply.
         </Text>
       </Box>
+      {product.metadata.shippingCountries ? (
+        <Text mt={2} fontSize="xs">
+          {`Shipping included to: ${
+            product.metadata.shippingCountries.toUpperCase() === "ALL"
+              ? "globally"
+              : product.metadata.shippingCountries
+          }`}
+        </Text>
+      ) : (
+        ""
+      )}
       <Flex mt={2}>
         <Button
           isDisabled={loading}

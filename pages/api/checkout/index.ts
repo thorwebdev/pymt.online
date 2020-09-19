@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getURL } from "../../../utils/helpers";
+import { getURL, isValidStripeId } from "../../../utils/helpers";
 
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -25,7 +25,8 @@ export default async function handler(
         cartItems,
         merchant,
       }: { cartItems: Array<CartItem>; merchant: string } = req.body;
-      // TODO: only allow a max of 10 items per cart
+      if (!isValidStripeId("account", merchant))
+        throw { message: "Invalid Stripe ID." };
       const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = Object.keys(
         cartItems
       ).map((key) => ({
