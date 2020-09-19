@@ -24,7 +24,12 @@ export default async function handler(
       const {
         cartItems,
         merchant,
-      }: { cartItems: Array<CartItem>; merchant: string } = req.body;
+        shippingCountries,
+      }: {
+        cartItems: Array<CartItem>;
+        merchant: string;
+        shippingCountries: string[];
+      } = req.body;
       if (!isValidStripeId("account", merchant))
         throw { message: "Invalid Stripe ID." };
       const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = Object.keys(
@@ -44,8 +49,7 @@ export default async function handler(
         payment_method_types: ["card"],
         billing_address_collection: "auto",
         shipping_address_collection: {
-          // TODO: shipping countries from products
-          allowed_countries: ["US", "CA"],
+          allowed_countries: shippingCountries as Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[],
         },
         line_items,
         success_url: `${getURL()}/${merchant}?success&session_id={CHECKOUT_SESSION_ID}`,
