@@ -1,14 +1,20 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { isValidStripeId } from "../utils/helpers";
 import Layout from "../components/Layout";
 import Hero from "../components/Hero";
-import { Button, Box } from "@chakra-ui/core";
+import {
+  Box,
+  Link as ChakraLink,
+  Flex,
+  Heading,
+  List,
+  ListItem,
+  Icon,
+} from "@chakra-ui/core";
 
 export default function Connect() {
-  const redirectToStripe = () => window.location.assign("/api/accounts/link");
-
   const router = useRouter();
   const { id } = router.query;
   const { data } = useSWR(
@@ -29,35 +35,39 @@ export default function Connect() {
     return (
       <Layout>
         <Hero size="small" />
-        <h3>You're successfully connected!</h3>
-        <ul>
-          <li>
-            <Link href={`/${id}`}>
-              <a>View your products</a>
-            </Link>
-          </li>
-          <li>
-            <a
-              href={`https://dashboard.stripe.com/${
-                data?.account?.livemode ? "" : "test/"
-              }products`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Manage your products in Stripe.
-            </a>
-          </li>
-        </ul>
+        <Flex p={5} align="center" justify="center">
+          <Box maxWidth="1000px">
+            <Heading as="h2" size="xl">
+              {`You're successfully connected! 🥳`}
+            </Heading>
+            <List mt={4} styleType="disc">
+              <ListItem>
+                <ChakraLink
+                  isExternal
+                  href={`https://dashboard.stripe.com/${
+                    data?.account?.livemode ? "" : "test/"
+                  }products`}
+                >
+                  Manage your products in Stripe.{" "}
+                  <Icon name="external-link" mx="2px" />
+                </ChakraLink>
+              </ListItem>
+              <ListItem>
+                <NextLink href={`/${id}`} passHref>
+                  <a>View your products.</a>
+                </NextLink>
+              </ListItem>
+            </List>
+          </Box>
+        </Flex>
       </Layout>
     );
-  return (
-    <Layout>
-      <Hero size="small" />
-      <Box alignItems="center" maxWidth="800px" width="100%">
-        <Button onClick={redirectToStripe} size="lg" bg="secondary" mt="24px">
-          Signup with Stripe
-        </Button>
-      </Box>
-    </Layout>
-  );
+  if (data && typeof window === "object") window?.location?.replace("/");
+  if (
+    id &&
+    !isValidStripeId("account", id as string) &&
+    typeof window === "object"
+  )
+    window?.location?.replace("/");
+  return <p>test</p>;
 }

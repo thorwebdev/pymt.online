@@ -25,18 +25,8 @@ const Layout = ({ children, title = "pymt.online" }: Props) => (
     </Head>
     {children}
     <footer>
-      <Flex
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        maxWidth="800px"
-        width="100%"
-        p={8}
-        mt={[0, 0, 8]}
-        mb={[0, 0, 8]}
-        mx="auto"
-      >
-        <Box>
+      <Flex p={5} align="center" justify="center" flexWrap="wrap">
+        <Box mr={2}>
           <Text
             as="span"
             color="grey.500"
@@ -45,9 +35,11 @@ const Layout = ({ children, title = "pymt.online" }: Props) => (
             {"@thorwebdev"}
           </ChakraLink>
         </Box>
-        <NextLink href="/terms" passHref>
-          <a>Terms · Privacy Policy · Refunds · About</a>
-        </NextLink>
+        <Box>
+          <NextLink href="/terms" passHref>
+            <a>Terms · Privacy · Refunds</a>
+          </NextLink>
+        </Box>
       </Flex>
     </footer>
   </>

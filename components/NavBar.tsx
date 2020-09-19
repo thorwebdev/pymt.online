@@ -11,7 +11,7 @@ export type Account = {
   branding: Stripe.Account.Settings.Branding;
 };
 
-export default function NavBar({ account }: { account: Account }) {
+export default function NavBar({ account }: { account?: Account }) {
   return (
     <Flex
       bg={account?.branding?.primary_color ?? "primary"}
@@ -31,9 +31,13 @@ export default function NavBar({ account }: { account: Account }) {
           {account?.name ?? "pymt.online"}
         </Heading>
       </Flex>
-      <Box>
-        <CartDrawer account={account} />
-      </Box>
+      {account ? (
+        <Box>
+          <CartDrawer account={account} />
+        </Box>
+      ) : (
+        ""
+      )}
     </Flex>
   );
 }

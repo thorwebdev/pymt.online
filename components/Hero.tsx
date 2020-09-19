@@ -26,17 +26,15 @@ export default function Hero({ size }: { size?: string }) {
           <Heading as="h1" size="2xl" color="white">
             pymt.online
           </Heading>
+          <Heading as="h2" size="lg" color="white">
+            The fastest way to start selling online with Stripe.
+          </Heading>
           {size !== "small" ? (
-            <>
-              <Heading as="h2" size="lg" color="white">
-                The fastest way to start selling online with Stripe.
-              </Heading>
-              <NextLink href="/account" passHref>
-                <Button as="a" size="lg" bg="secondary" mt="24px">
-                  Get started
-                </Button>
-              </NextLink>
-            </>
+            <NextLink href="/api/accounts/link" passHref>
+              <Button as="a" size="lg" bg="secondary" mt="24px">
+                Get started
+              </Button>
+            </NextLink>
           ) : (
             ""
           )}
