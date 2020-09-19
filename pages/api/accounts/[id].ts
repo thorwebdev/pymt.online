@@ -21,6 +21,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         branding,
         dashboard: { display_name },
       },
+      business_profile: { support_email },
     } = accountObject;
     // branding.icon = branding.icon
     //   ? (
@@ -56,6 +57,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         id,
         details_submitted,
         name: display_name,
+        email: support_email,
         branding,
         default_currency,
         livemode: process.env.STRIPE_SECRET_KEY.includes("live"),

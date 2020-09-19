@@ -7,10 +7,11 @@ import Cart from "../../components/Cart";
 import ProductCard from "../../components/ProductCard";
 import { getURL, isValidStripeId } from "../../utils/helpers";
 import NavBar from "../../components/NavBar";
-import { SimpleGrid, Flex, Skeleton, Box } from "@chakra-ui/core";
+import { SimpleGrid, Flex, Skeleton } from "@chakra-ui/core";
 import { useEffect } from "react";
 import { useManageCart } from "../../utils/cart-manager";
 import Layout from "../../components/Layout";
+import SuccessModal from "../../components/SuccessModal";
 
 export default function MerchantLandingPage({
   account,
@@ -28,6 +29,7 @@ export default function MerchantLandingPage({
   const { initMerchant } = useManageCart();
   useEffect(() => initMerchant(), []);
   const router = useRouter();
+  const { success } = router.query;
 
   // If the page is not yet generated, this will be displayed
   // initially until getStaticProps() finishes running
@@ -45,6 +47,7 @@ export default function MerchantLandingPage({
     <Layout>
       <Cart merchant={account.id} currency={account.default_currency}>
         <NavBar account={account} />
+        <SuccessModal account={account} success={success} />
         <Flex align="center" justify="center">
           <SimpleGrid
             maxWidth="1000px"

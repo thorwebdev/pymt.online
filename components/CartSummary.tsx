@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import NextLink from "next/link";
 
 import {
   useDisclosure,
@@ -56,25 +56,30 @@ const CartSummary = ({ account }) => {
   const DifferentMerchant = () => (
     <>
       <DrawerBody>
-        <span>
-          {`You already have a cart session with a `}
-          <Link href={`/${currentMerchant}`}>
-            <a>different merchant.</a>
-          </Link>
-        </span>
-      </DrawerBody>
-      <DrawerFooter>
+        <Text>You already have a cart with a different merchant!</Text>
+        <Divider />
+        <NextLink href={`/${currentMerchant}`} passHref>
+          <Button
+            as="a"
+            mt={4}
+            width="full"
+            bg={account?.branding?.secondary_color ?? "secondary"}
+          >
+            Go to merchant
+          </Button>
+        </NextLink>
         <Button
+          mt={4}
+          width="full"
           variant="outline"
-          mr={3}
           onClick={() => {
             clearCart();
             clearMerchant();
           }}
         >
-          Clear
+          Clear cart
         </Button>
-      </DrawerFooter>
+      </DrawerBody>
     </>
   );
 
