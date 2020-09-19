@@ -6,6 +6,7 @@ import Stripe from "stripe";
 
 type Props = {
   children: ReactNode;
+  product?: Stripe.Product;
   account?: {
     id: string;
     name: string;
@@ -15,11 +16,15 @@ type Props = {
   };
 };
 
-const Layout = ({ children, account }: Props) => (
+const Layout = ({ children, account, product }: Props) => (
   <>
     <Head>
       <title>
-        {account?.name ? `${account.name} | pymt.online` : "pymt.online"}
+        {product
+          ? `${product.name} | pymt.online`
+          : account
+          ? `${account.name} | pymt.online`
+          : "pymt.online"}
       </title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -28,13 +33,19 @@ const Layout = ({ children, account }: Props) => (
       <meta
         name="twitter:title"
         content={
-          account?.name ? `${account.name} | pymt.online` : "pymt.online"
+          product
+            ? `${product.name} | pymt.online`
+            : account
+            ? `${account.name} | pymt.online`
+            : "pymt.online"
         }
       />
       <meta
         name="twitter:description"
         content={
-          account
+          product
+            ? `Buy ${product.name} on pymt.online`
+            : account
             ? "Buy products online."
             : "The fastest way to start selling online."
         }
@@ -42,9 +53,10 @@ const Layout = ({ children, account }: Props) => (
       <meta
         name="twitter:image"
         content={
+          product?.images[0] ??
           (account?.branding?.logo as string) ??
           (account?.branding?.icon as string) ??
-          "/logo.png"
+          "https://pymt.online/logo.png"
         }
       />
     </Head>
