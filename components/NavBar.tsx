@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { Box, Flex, Image, Heading } from "@chakra-ui/core";
 
-import CartDrawer from "./CartDrawer";
+import CartSummary from "./CartSummary";
 
 export type Account = {
   id: string;
@@ -33,7 +33,7 @@ export default function NavBar({ account }: { account?: Account }) {
       </Flex>
       {account ? (
         <Box>
-          <CartDrawer account={account} />
+          <CartSummary account={account} />
         </Box>
       ) : (
         ""

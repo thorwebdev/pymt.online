@@ -57,6 +57,7 @@ export default function ProductCard({
       price: price.unit_amount,
       name: product.name,
       currency: price.currency,
+      image: product.images[0],
     });
     toast({
       title: "Added to cart",
