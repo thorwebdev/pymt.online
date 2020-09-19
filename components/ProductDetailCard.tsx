@@ -167,6 +167,10 @@ export default function ProductDetailCard({
             ))}
           </Select>
         </FormControl>
+        <Text mt={1} fontSize="xs" width="full">
+          Local taxes included (where applicable) Additional duties and taxes
+          may apply.
+        </Text>
       </Box>
       <Flex mt={2}>
         <Button

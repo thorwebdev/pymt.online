@@ -101,6 +101,10 @@ const CartSummary = ({ account }) => {
         >
           Checkout
         </Button>
+        <Text mt={1} fontSize="xs" width="full" textAlign="center">
+          Local taxes included (where applicable) Additional duties and taxes
+          may apply.
+        </Text>
         <Divider />
         <Text as="strong">{account.name}</Text>
         <Divider />
