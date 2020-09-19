@@ -23,26 +23,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       },
       business_profile: { support_email },
     } = accountObject;
-    // branding.icon = branding.icon
-    //   ? (
-    //       await stripe.fileLinks.create(
-    //         {
-    //           file: branding.icon as string,
-    //         },
-    //         { stripeAccount: id as string }
-    //       )
-    //     ).url
-    //   : null;
-    // branding.logo = branding.logo
-    //   ? (
-    //       await stripe.fileLinks.create(
-    //         {
-    //           file: branding.logo as string,
-    //         },
-    //         { stripeAccount: id as string }
-    //       )
-    //     ).url
-    //   : null;
+    branding.icon = branding.icon
+      ? (
+          await stripe.fileLinks.create(
+            {
+              file: branding.icon as string,
+            },
+            { stripeAccount: id as string }
+          )
+        ).url
+      : null;
+    branding.logo = branding.logo
+      ? (
+          await stripe.fileLinks.create(
+            {
+              file: branding.logo as string,
+            },
+            { stripeAccount: id as string }
+          )
+        ).url
+      : null;
 
     if (!details_submitted) {
       // Disconnect unclaimed account

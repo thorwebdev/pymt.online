@@ -29,7 +29,18 @@ export default function NavBar({ account }: { account?: Account }) {
           justifyContent="center"
           alignItems="center"
         >
-          <Image src="/logo.svg" size={30} />
+          {account?.branding?.icon || account?.branding?.logo ? (
+            <Image
+              src={
+                (account.branding?.logo as string) ??
+                (account.branding?.icon as string)
+              }
+              size={30}
+            />
+          ) : (
+            ""
+          )}
+          {!account ? <Image src="/logo.svg" size={30} /> : ""}
           <Heading
             fontSize="xl"
             pl={3}
