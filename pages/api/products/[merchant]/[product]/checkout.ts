@@ -42,7 +42,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const shippingCountries = shippingMetadata.replace(/\s/g, "").split(",");
       if (shippingCountries[0].toUpperCase() === "ALL") {
         checkoutSessionCreateParams.shipping_address_collection = {
-          allowed_countries: allShippingCountries as Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[],
+          allowed_countries: Object.keys(
+            allShippingCountries
+          ) as Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[],
         };
       } else {
         checkoutSessionCreateParams.shipping_address_collection = {

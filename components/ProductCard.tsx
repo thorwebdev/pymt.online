@@ -58,6 +58,8 @@ export default function ProductCard({
       name: product.name,
       currency: price.currency,
       image: product.images[0],
+      // TODO figure out a better way to pass shipping countries.
+      description: product.metadata.shippingCountries,
     });
     toast({
       title: "Added to cart",
@@ -90,6 +92,15 @@ export default function ProductCard({
         </Badge>
       </Flex>
       <Text mt={2}>{product.description}</Text>
+      {product.metadata.shippingCountries ? (
+        <Text mt={2} fontSize="xs">{`Shipping included to: ${
+          product.metadata.shippingCountries.toUpperCase() === "ALL"
+            ? "globally"
+            : product.metadata.shippingCountries
+        }`}</Text>
+      ) : (
+        ""
+      )}
       <Button
         mt={2}
         bg={account?.branding?.secondary_color ?? "secondary"}
