@@ -41,7 +41,7 @@ export default function SuccessModal({ account, success }) {
               You will receive an email receipt shortly. If you have any
               questions, please{" "}
               <Link href={`mailto:${account.email}`} isExternal>
-                contact <Icon name="external-link" mx="2px" />
+                contact <Icon name="email" mx="2px" />
               </Link>{" "}
               the merchant.
             </Text>

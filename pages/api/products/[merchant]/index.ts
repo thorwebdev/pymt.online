@@ -32,13 +32,16 @@ export default async (
     // Group all prices by their products and currencies;
     const products: Products = {};
     for (const price of prices.data) {
-      const product = price.product as Stripe.Product;
-      if (!products[product.id]) {
-        products[product.id] = product;
-        products[product.id]["prices"] = [];
+      // Currently only non-recurring prices are supported.
+      if (!price.recurring && (price.product as Stripe.Product).active) {
+        const product = price.product as Stripe.Product;
+        if (!products[product.id]) {
+          products[product.id] = product;
+          products[product.id]["prices"] = [];
+        }
+        price.product = product.id;
+        products[product.id]["prices"].push(price);
       }
-      price.product = product.id;
-      products[product.id]["prices"].push(price);
     }
 
     res.status(200).json({ products: Object.values(products) });

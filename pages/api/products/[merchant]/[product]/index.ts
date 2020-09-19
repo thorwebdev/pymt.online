@@ -30,6 +30,7 @@ export default async (
         stripeAccount: merchant as string,
       }
     );
+    if (!product.active) throw { message: "Product has been archived." };
     const prices = await stripe.prices.list(
       { product: product.id },
       { stripeAccount: merchant as string }
