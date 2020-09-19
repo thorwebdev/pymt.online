@@ -6,6 +6,7 @@ import {
   Link as ChakraLink,
   Icon,
   Box,
+  Code,
 } from "@chakra-ui/core";
 
 export default function Instructions({
@@ -14,14 +15,14 @@ export default function Instructions({
   account?: { livemode: boolean };
 }) {
   return (
-    <Stack spacing={3}>
+    <Stack spacing={5}>
       <Heading as="h1" size="2xl">
         {account ? "Next steps:" : "How it works:"}
       </Heading>
       {account ? (
         ""
       ) : (
-        <>
+        <Stack spacing={5}>
           <Heading as="h2" size="xl">
             {`1. Create a Stripe Account`}
           </Heading>
@@ -32,7 +33,7 @@ export default function Instructions({
           <Box p={4} border="1px" borderRadius="md" borderColor="gray.200">
             <Image src="/steps/step-1.png" />
           </Box>
-        </>
+        </Stack>
       )}
       <Heading as="h2" size="xl">
         {`2. Create Products in Stripe`}
@@ -41,6 +42,7 @@ export default function Instructions({
         In your{" "}
         {account ? (
           <ChakraLink
+            textDecor="underline"
             isExternal
             href={`https://dashboard.stripe.com/${
               account.livemode ? "" : "test/"
@@ -51,10 +53,21 @@ export default function Instructions({
         ) : (
           "Stripe Dashboard"
         )}
-        , create your product listings.
+        , create your product listings. You can enable shipping address
+        collection by adding a comma separated list of countries to the product
+        metadata using the <Code children="shippingCountries" /> key. If you
+        ship globally you can simply set <Code children="all" /> as the value,
+        which will enable shipping address collection for{" "}
+        <ChakraLink
+          textDecor="underline"
+          isExternal
+          href="https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-shipping_address_collection-allowed_countries"
+        >
+          all countries Stripe supports. <Icon name="external-link" mx="2px" />
+        </ChakraLink>
       </Text>
       <Box p={4} border="1px" borderRadius="md" borderColor="gray.200">
-        <Image src="/steps/step-2.png" />
+        <Image src="/steps/step-2.gif" />
       </Box>
       <Heading as="h2" size="xl">
         {`3. Find your payment link`}
@@ -66,6 +79,48 @@ export default function Instructions({
       </Text>
       <Box p={4} border="1px" borderRadius="md" borderColor="gray.200">
         <Image src="/steps/step-3.png" />
+      </Box>
+      <Heading as="h2" size="xl">
+        {`4. Set your branding`}
+      </Heading>
+      <Text>
+        You can customize your branding with your preferred colors and logo.
+        Simply navigate to the{" "}
+        <ChakraLink
+          textDecor="underline"
+          isExternal
+          href="https://dashboard.stripe.com/settings/branding"
+        >
+          branding settings. <Icon name="external-link" mx="2px" />
+        </ChakraLink>
+      </Text>
+      <Box p={4} border="1px" borderRadius="md" borderColor="gray.200">
+        <Image src="/steps/step-4.gif" />
+      </Box>
+      <Heading as="h2" size="xl">
+        {`5. Enable email notifications`}
+      </Heading>
+      <Text>
+        Make sure to enable both{" "}
+        <ChakraLink
+          textDecor="underline"
+          isExternal
+          href="https://dashboard.stripe.com/settings/emails"
+        >
+          customer emails <Icon name="external-link" mx="2px" />
+        </ChakraLink>{" "}
+        and{" "}
+        <ChakraLink
+          textDecor="underline"
+          isExternal
+          href="https://dashboard.stripe.com/settings/user"
+        >
+          admin emails <Icon name="external-link" mx="2px" />
+        </ChakraLink>{" "}
+        so you never miss a purchase!
+      </Text>
+      <Box p={4} border="1px" borderRadius="md" borderColor="gray.200">
+        <Image src="/steps/step-5.gif" />
       </Box>
       <Heading as="h2" size="xl">
         {`Done. Start selling 🥳`}
