@@ -221,23 +221,30 @@ const CartSummary = ({ account }) => {
       </DrawerBody>
 
       <DrawerFooter>
-        <Button
-          variant="outline"
-          mr={3}
-          onClick={() => {
-            clearCart();
-            clearMerchant();
-          }}
-        >
-          Clear
-        </Button>
-        <Button
-          bg={account?.branding?.secondary_color ?? "secondary"}
-          onClick={handleCheckout}
-          isDisabled={cartEmpty || loading || checkoutBlocked}
-        >
-          Checkout
-        </Button>
+        <Box>
+          <Flex align="center" justify="space-between">
+            <Button
+              width="50%"
+              variant="outline"
+              mr={3}
+              onClick={() => {
+                clearCart();
+                clearMerchant();
+              }}
+            >
+              Clear
+            </Button>
+            <Button
+              width="50%"
+              bg={account?.branding?.secondary_color ?? "secondary"}
+              onClick={handleCheckout}
+              isDisabled={cartEmpty || loading || checkoutBlocked}
+            >
+              Checkout
+            </Button>
+          </Flex>
+          <Image mt={4} width="100%" src="/pbs.svg" />
+        </Box>
       </DrawerFooter>
     </>
   );

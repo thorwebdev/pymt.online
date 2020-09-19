@@ -110,7 +110,7 @@ export default function ProductDetailCard({
   };
 
   return (
-    <Box p={4} border="1px" borderRadius="md" borderColor="gray.200">
+    <Box p={4} pb={0} border="1px" borderRadius="md" borderColor="gray.200">
       <Image
         width="100%"
         minWidth="250px"
@@ -187,22 +187,26 @@ export default function ProductDetailCard({
       ) : (
         ""
       )}
-      <Flex mt={2}>
+      <Flex mt={2} wrap="wrap">
         <Button
           isDisabled={loading}
           onClick={handleCheckout}
           mr={4}
+          mb={4}
           bg={account?.branding?.secondary_color ?? "secondary"}
         >
           Buy now
         </Button>
         <Button
+          mr={4}
+          mb={4}
           isDisabled={selectedPrice?.currency !== account.default_currency}
           variant="outline"
           onClick={(e) => addToCart(e, cartPrice)}
         >
           Add to cart
         </Button>
+        <Image mb={4} maxHeight="40px" src="/pbs.svg" />
       </Flex>
     </Box>
   );
