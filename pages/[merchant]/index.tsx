@@ -44,7 +44,7 @@ export default function MerchantLandingPage({
     );
   if (!products) return <DefaultErrorPage statusCode={404} />;
   return (
-    <Layout>
+    <Layout account={account}>
       <Cart merchant={account.id} currency={account.default_currency}>
         <NavBar account={account} />
         <SuccessModal account={account} success={success} />

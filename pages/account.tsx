@@ -42,7 +42,7 @@ export default function Connect() {
     );
   if (data?.account?.details_submitted)
     return (
-      <Layout>
+      <Layout account={data.account}>
         <Hero size="small" />
         <Flex p={5} align="center" justify="center">
           <Box maxWidth="1000px">

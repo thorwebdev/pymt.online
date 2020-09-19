@@ -2,26 +2,51 @@ import React, { ReactNode } from "react";
 import Head from "next/head";
 import NextLink from "next/link";
 import { Flex, Box, Text, Link as ChakraLink } from "@chakra-ui/core";
+import Stripe from "stripe";
 
 type Props = {
   children: ReactNode;
-  title?: string;
+  account?: {
+    id: string;
+    name: string;
+    details_submitted: boolean;
+    default_currency: string;
+    branding: Stripe.Account.Settings.Branding;
+  };
 };
 
-const Layout = ({ children, title = "pymt.online" }: Props) => (
+const Layout = ({ children, account }: Props) => (
   <>
     <Head>
-      <title>{title}</title>
+      <title>
+        {account?.name ? `${account.name} | pymt.online` : "pymt.online"}
+      </title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content="@thorwebdev" />
-      <meta name="twitter:title" content="TypeScript Next.js Stripe Example" />
+      <meta
+        name="twitter:title"
+        content={
+          account?.name ? `${account.name} | pymt.online` : "pymt.online"
+        }
+      />
       <meta
         name="twitter:description"
-        content="Full-stack TypeScript example using Next.js, react-stripe-js, and stripe-node."
+        content={
+          account
+            ? "Buy products online."
+            : "The fastest way to start selling online."
+        }
       />
-      <meta name="twitter:image" content="/logo.svg" />
+      <meta
+        name="twitter:image"
+        content={
+          (account?.branding?.logo as string) ??
+          (account?.branding?.icon as string) ??
+          "/logo.png"
+        }
+      />
     </Head>
     {children}
     <footer>
