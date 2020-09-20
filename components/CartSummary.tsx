@@ -263,6 +263,8 @@ const CartSummary = ({ account }) => {
         placement="right"
         onClose={onClose}
         finalFocusRef={btnRef}
+        scrollBehavior={"inside"}
+        blockScrollOnMount={false}
       >
         <DrawerOverlay />
         <DrawerContent>
