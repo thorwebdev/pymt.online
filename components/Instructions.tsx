@@ -48,16 +48,21 @@ export default function Instructions({
               account.livemode ? "" : "test/"
             }products`}
           >
-            Stripe Dachboard <Icon name="external-link" mx="2px" />
+            Stripe Dashboard <Icon name="external-link" mx="2px" />
           </ChakraLink>
         ) : (
           "Stripe Dashboard"
         )}
-        , create your product listings. You can enable shipping address
-        collection by adding a comma separated list of countries to the product
-        metadata using the <Code children="shippingCountries" /> key. If you
-        ship globally you can simply set <Code children="all" /> as the value,
-        which will enable shipping address collection for{" "}
+        , create your product listings. The pricing for your product must be
+        one-time (recurring prices are not yet supported) and must include all
+        taxes and shipping cost.
+      </Text>
+      <Text>
+        You can enable shipping address collection by adding a comma separated
+        list of countries to the product metadata using the{" "}
+        <Code children="shippingCountries" /> key. If you ship globally you can
+        simply set <Code children="all" /> as the value, which will enable
+        shipping address collection for{" "}
         <ChakraLink
           textDecor="underline"
           isExternal

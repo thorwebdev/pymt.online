@@ -1,11 +1,21 @@
 import Layout from "../components/Layout";
 import Hero from "../components/Hero";
-import { Flex, Box, Heading, Text, Stack } from "@chakra-ui/core";
+import {
+  Flex,
+  Box,
+  Heading,
+  Text,
+  Stack,
+  Link,
+  Icon,
+  List,
+  ListItem,
+} from "@chakra-ui/core";
 
 export default function Terms() {
   return (
     <Layout>
-      <Hero size="small" />
+      <Hero />
       <Flex p={5} align="center" justify="center">
         <Box maxWidth="1000px">
           <Stack spacing={5}>
@@ -137,8 +147,40 @@ export default function Terms() {
             </Heading>
             <Text>
               If you have any questions about these Terms, please{" "}
-              <a href="mailto:thorstickerstore@gmail.com">contact us.</a>
+              <Link
+                textDecoration="underline"
+                isExternal
+                href="https://twitter.com/pymt_online"
+              >
+                contact us. <Icon name="external-link" mx="2px" />
+              </Link>
             </Text>
+            <Heading as="h2" size="lg">
+              Credits
+            </Heading>
+            <List styleType="disc">
+              <ListItem>
+                Thank you{" "}
+                <Link
+                  textDecoration="underline"
+                  isExternal
+                  href="https://trag.dev"
+                >
+                  Chris Trag <Icon name="external-link" mx="2px" />
+                </Link>{" "}
+                for your help with the artwork ❤️
+              </ListItem>
+              <ListItem>
+                Icon in logo made by{" "}
+                <Link
+                  textDecoration="underline"
+                  isExternal
+                  href="https://www.flaticon.com/authors/freepik"
+                >
+                  Freepik <Icon name="external-link" mx="2px" />
+                </Link>
+              </ListItem>
+            </List>
           </Stack>
         </Box>
       </Flex>
