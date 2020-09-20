@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import Head from "next/head";
 import NextLink from "next/link";
-import { Flex, Box, Text, Link as ChakraLink } from "@chakra-ui/core";
+import { Flex, Box, Text, Link as ChakraLink, Icon } from "@chakra-ui/core";
 import Stripe from "stripe";
 
 type Props = {
@@ -72,13 +72,29 @@ const Layout = ({ children, account, product }: Props) => (
             {"@thorwebdev"}
           </ChakraLink>
         </Box>
-        <Box>
+        <Box mr={2}>
           <NextLink href="/terms" passHref>
             <a>Terms · Privacy · </a>
           </NextLink>
           <NextLink href="/pricing" passHref>
             <a>Pricing</a>
           </NextLink>
+        </Box>
+        <Box>
+          <ChakraLink
+            isExternal
+            aria-label="GitHub"
+            href="https://github.com/thorwebdev/pymt.online"
+          >
+            <Icon name="github" w="6" h="6" />
+          </ChakraLink>
+          <ChakraLink
+            isExternal
+            aria-label="Twitter"
+            href="https://twitter.com/pymt_online"
+          >
+            <Icon name="twitter" w="5" h="5" />
+          </ChakraLink>
         </Box>
       </Flex>
     </footer>
