@@ -28,7 +28,10 @@ const Layout = ({ children, account, product }: Props) => (
       </title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <meta name="twitter:card" content="summary" />
+      <meta
+        name="twitter:card"
+        content={product || account ? "summary" : "summary_large_image"}
+      />
       <meta name="twitter:site" content="@thorwebdev" />
       <meta
         name="twitter:title"
@@ -46,17 +49,19 @@ const Layout = ({ children, account, product }: Props) => (
           product
             ? `Buy ${product.name} on pymt.online`
             : account
-            ? "Buy products online."
+            ? `Shop products by ${account.name}.`
             : "The fastest way to start selling online."
         }
       />
       <meta
         name="twitter:image"
         content={
-          product?.images[0] ??
-          (account?.branding?.logo as string) ??
-          (account?.branding?.icon as string) ??
-          "https://pymt.online/logo.png"
+          product || account
+            ? product?.images[0] ??
+              (account?.branding?.logo as string) ??
+              (account?.branding?.icon as string) ??
+              "https://pymt.online/logo.png"
+            : "https://pymt.online/twitter_large.png"
         }
       />
     </Head>
