@@ -1,8 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# pymt.online
 
-## Getting Started
+![banner](public/twitter_header.png)
 
-First, run the development server:
+[pymt.online](https://pymt.online) is an open-source SaaS platform that provides payment links and shopping cart functionality for the products in your Stripe account.
+
+## Developing
+
+#### 1. Clone this repository
+
+#### 2. Install the dependencies
+
+```bash
+npm install
+# or
+yarn
+```
+
+#### 3. Run the development server:
 
 ```bash
 npm run dev
@@ -11,8 +25,6 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
 ## Learn More
 

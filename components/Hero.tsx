@@ -28,7 +28,7 @@ export default function Hero({ size }: { size?: string }) {
             pymt.online
           </Heading>
           <Heading as="h2" size="lg" color="white" mt="24px">
-            The fastest way to start selling online with Stripe.
+            Payment links and shopping carts for your Stripe account.
           </Heading>
           <Flex align="center" wrap="wrap">
             {size !== "small" ? (
