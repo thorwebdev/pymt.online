@@ -50,7 +50,7 @@ const Layout = ({ children, account, product }: Props) => (
             ? `Buy ${product.name} on pymt.online`
             : account
             ? `Shop products by ${account.name}.`
-            : "The fastest way to start selling online."
+            : "Payment links and shopping carts for your Stripe account."
         }
       />
       <meta

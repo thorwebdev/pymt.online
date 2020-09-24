@@ -30,20 +30,20 @@ export default function Terms() {
               <Link href="https://stripe.com/pricing" isExternal>
                 Stripe fees <Icon name="external-link" mx="2px" />
               </Link>{" "}
-              + 2% capped at US$1.00 per payment.
+              + 1% capped at US$0.50 per payment.
             </Heading>
             <Heading as="h3" size="md">
               Example pymt.online fee:
             </Heading>
             <List styleType="disc">
-              <ListItem>US$05.00 payment: US$0.10 (2%)</ListItem>
-              <ListItem>US$10.00 payment: US$0.20 (2%)</ListItem>
+              <ListItem>US$05.00 payment: US$0.05 (1%)</ListItem>
+              <ListItem>US$10.00 payment: US$0.10 (1%)</ListItem>
               <ListItem>
-                US$50.00 payment: US$1.00 (2% max cap reached)
+                US$50.00 payment: US$0.50 (1% max cap reached)
               </ListItem>
-              <ListItem>US$100.00 payment: US$1.00 (1% due to cap)</ListItem>
-              <ListItem>US$200.00 payment: US$1.00 (0.5% due to cap)</ListItem>
-              <ListItem>US$500.00 payment: US$1.00 (0.2% due to cap)</ListItem>
+              <ListItem>US$100.00 payment: US$0.50 (0.5% due to cap)</ListItem>
+              <ListItem>US$200.00 payment: US$0.50 (0.25% due to cap)</ListItem>
+              <ListItem>US$500.00 payment: US$0.50 (0.1% due to cap)</ListItem>
             </List>
           </Stack>
         </Box>
