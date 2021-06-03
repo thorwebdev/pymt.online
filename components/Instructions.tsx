@@ -17,6 +17,20 @@ export default function Instructions({
   return (
     <Stack spacing={5}>
       <Heading as="h1" size="2xl">
+        DEPRECATION NOTICE
+      </Heading>
+      <Heading as="h2" size="xl">
+        pymt.online has been deprecated. Please use{" "}
+        <ChakraLink
+          textDecor="underline"
+          isExternal
+          href="https://stripe.com/payments/payment-links"
+        >
+          Stripe Payment Links <Icon name="external-link" mx="2px" />
+        </ChakraLink>{" "}
+        instead!
+      </Heading>
+      <Heading as="h1" size="2xl">
         {account ? "Next steps:" : "How it works:"}
       </Heading>
       {account ? (

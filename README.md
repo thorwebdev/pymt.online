@@ -1,5 +1,11 @@
 # pymt.online
 
+## DEPRECATION NOTICE
+
+**pymt.online has been deprecated. Please use [Stripe Payment Links](https://stripe.com/payments/payment-links) instead!**
+
+<hr />
+
 ![banner](public/twitter_header.png)
 
 [pymt.online](https://pymt.online) is an open-source SaaS platform that provides payment links and shopping cart functionality for the products in your Stripe account.
